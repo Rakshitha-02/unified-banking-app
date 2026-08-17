@@ -1,15 +1,15 @@
+import { cn } from "../../lib/utils";
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useBankingContext } from '../../context/BankingContext';
 import { LayoutDashboard, CreditCard, ArrowRightLeft, FileText, Settings, Briefcase, Users, Building, Activity } from 'lucide-react';
-import clsx from 'clsx';
-import { twMerge } from 'tailwind-merge';
 
-export function cn(...inputs: (string | undefined | null | false)[]) {
-  return twMerge(clsx(inputs));
+
+interface SidebarProps {
+  className?: string;
 }
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   const { activeContext } = useBankingContext();
 
   const getLinks = () => {
@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
   const links = getLinks();
 
   return (
-    <aside className="w-64 bg-gray-50 border-r border-gray-200 hidden lg:block overflow-y-auto min-h-[calc(100vh-4rem)] p-4">
+    <aside className={cn("w-64 bg-gray-50 border-r border-gray-200 hidden lg:block overflow-y-auto min-h-[calc(100vh-4rem)] p-4", className)}>
       <nav className="space-y-1">
         {links.map((link) => (
           <NavLink
