@@ -7,6 +7,7 @@ export interface BottomNavItem {
   icon: React.ReactNode;
   label: string;
   to: string;
+  end?: boolean;
 }
 
 interface BottomNavigationProps {
@@ -27,6 +28,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ items, className })
           <NavLink
             key={item.to}
             to={item.to}
+            end={item.end}
             className={({ isActive }) =>
               cn(
                 'flex flex-1 flex-col items-center justify-center gap-1 transition-colors relative',
