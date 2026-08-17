@@ -18,6 +18,15 @@ export interface BusinessRelationship {
   role: string;
 }
 
+export interface CustomerProfile {
+  customerId: string;
+  name: string;
+  segment: 'SME' | 'HNI' | 'RETAIL' | 'CORPORATE';
+  customerType: 'Retail' | 'Business';
+  availableContexts: BankingContextType[];
+  dashboardType: string;
+}
+
 export interface MockUser {
   profile: UserProfile;
   personalRelationship: PersonalRelationship;

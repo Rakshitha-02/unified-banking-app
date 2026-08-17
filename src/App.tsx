@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import { BankingProvider, useBankingContext } from './context/BankingContext';
 import AppShell from './components/layout/AppShell';
+import { ProtectedRoute } from './components/shared/ProtectedRoute';
 
+import Login from './pages/Login';
+import BankingSelection from './pages/BankingSelection';
 import PersonalDashboard from './pages/PersonalDashboard';
 import BusinessDashboard from './pages/BusinessDashboard';
 import UnifiedDashboard from './pages/UnifiedDashboard';
@@ -46,30 +50,55 @@ const ComingSoon: React.FC<{ title: string }> = ({ title }) => (
 
 function App() {
   return (
-    <BankingProvider>
-      <BrowserRouter>
-        <ContextRouteSync />
-        <AppShell>
+    <AuthProvider>
+      <BankingProvider>
+        <BrowserRouter>
+          <ContextRouteSync />
           <Routes>
-            <Route path="/personal" element={<PersonalDashboard />} />
-            <Route path="/personal/accounts" element={<ComingSoon title="Personal Accounts" />} />
-            <Route path="/personal/transfers" element={<ComingSoon title="Personal Transfers" />} />
-            <Route path="/personal/statements" element={<ComingSoon title="Personal Statements" />} />
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
 
-            <Route path="/business" element={<BusinessDashboard />} />
-            <Route path="/business/accounts" element={<ComingSoon title="Corporate Accounts" />} />
-            <Route path="/business/payments" element={<ComingSoon title="Payments & Approvals" />} />
-            <Route path="/business/users" element={<ComingSoon title="User Management" />} />
+            {/* Context Selection (requires auth, but outside AppShell) */}
+            <Route
+              path="/banking-selection"
+              element={
+                <ProtectedRoute>
+                  <BankingSelection />
+                </ProtectedRoute>
+              }
+            />
 
-            <Route path="/unified" element={<UnifiedDashboard />} />
+            {/* Protected Dashboard Routes inside AppShell */}
+            <Route
+              path="*"
+              element={
+                <ProtectedRoute>
+                  <AppShell>
+                    <Routes>
+                      <Route path="/personal" element={<PersonalDashboard />} />
+                      <Route path="/personal/accounts" element={<ComingSoon title="Personal Accounts" />} />
+                      <Route path="/personal/transfers" element={<ComingSoon title="Personal Transfers" />} />
+                      <Route path="/personal/statements" element={<ComingSoon title="Personal Statements" />} />
 
-            <Route path="/settings" element={<ComingSoon title="Settings" />} />
+                      <Route path="/business" element={<BusinessDashboard />} />
+                      <Route path="/business/accounts" element={<ComingSoon title="Corporate Accounts" />} />
+                      <Route path="/business/payments" element={<ComingSoon title="Payments & Approvals" />} />
+                      <Route path="/business/users" element={<ComingSoon title="User Management" />} />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
+                      <Route path="/unified" element={<UnifiedDashboard />} />
+
+                      <Route path="/settings" element={<ComingSoon title="Settings" />} />
+
+                      <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                  </AppShell>
+                </ProtectedRoute>
+              }
+            />
           </Routes>
-        </AppShell>
-      </BrowserRouter>
-    </BankingProvider>
+        </BrowserRouter>
+      </BankingProvider>
+    </AuthProvider>
   );
 }
 

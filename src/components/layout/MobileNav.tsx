@@ -11,21 +11,21 @@ const MobileNav: React.FC = () => {
     switch (activeContext) {
       case 'PERSONAL':
         return [
-          { to: '/personal', icon: <LayoutDashboard />, label: 'Home' },
+          { to: '/personal', icon: <LayoutDashboard />, label: 'Home', end: true },
           { to: '/personal/accounts', icon: <CreditCard />, label: 'Accounts' },
           { to: '/personal/transfers', icon: <ArrowRightLeft />, label: 'Transfers' },
         ];
       case 'BUSINESS':
         return [
-          { to: '/business', icon: <Briefcase />, label: 'Home' },
+          { to: '/business', icon: <Briefcase />, label: 'Home', end: true },
           { to: '/business/accounts', icon: <CreditCard />, label: 'Accounts' },
           { to: '/business/payments', icon: <ArrowRightLeft />, label: 'Payments' },
         ];
       case 'UNIFIED':
         return [
-          { to: '/unified', icon: <Activity />, label: 'Global' },
-          { to: '/personal', icon: <LayoutDashboard />, label: 'Personal' },
-          { to: '/business', icon: <Briefcase />, label: 'Business' },
+          { to: '/unified', icon: <Activity />, label: 'Global', end: true },
+          { to: '/personal', icon: <LayoutDashboard />, label: 'Personal', end: true },
+          { to: '/business', icon: <Briefcase />, label: 'Business', end: true },
         ];
       default:
         return [];

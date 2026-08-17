@@ -42,7 +42,8 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
         />
       </div>
 
-      {/* Mobile Context Switcher - optionally keep or remove if we use MobileHeader, keeping for now as requested */}
+      {/* Mobile Context Switcher */}
+      {/* Show only if more than 1 context is available. Logic handled within ContextSwitcher or skipped here for simplicity, but cleaner to let ContextSwitcher handle it */}
       <div className="md:hidden p-4 bg-white border-b border-gray-100">
         <ContextSwitcher />
       </div>
